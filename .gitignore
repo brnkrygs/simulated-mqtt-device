@@ -1,3 +1,5 @@
+# Do not commit certificates
+/credentials/*
 # Logs
 logs
 *.log
