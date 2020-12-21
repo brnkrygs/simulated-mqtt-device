@@ -1,0 +1,13 @@
+{
+  "name": "simulated-mqtt-device",
+  "version": "1.0.0",
+  "description": "Simulated AWS IoT device",
+  "main": "index.js",
+  "repository": "git@github.com:brnkrygs/simulated-mqtt-device.git",
+  "author": "Brian Krygsman <brian.krygsman@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^6.2.1"
+  }
+}
