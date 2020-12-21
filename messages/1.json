@@ -1,0 +1,6 @@
+{
+  "topic": "simulator/__THINGNAME__/temps",
+  "payload": {
+    "temp": 100
+  }
+}

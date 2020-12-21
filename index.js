@@ -2,6 +2,8 @@ const chalk = require( 'chalk' );
 const commander = require( 'commander' );
 const inquirer = require( 'inquirer' );
 
+const Device = require( './Device' );
+
 const questions = {
   thingName: {
     type: 'input',
@@ -25,9 +27,12 @@ const questions = {
 
 // Startup
 const program = new commander.Command();
+let thing;
 
 async function tick(){
   console.log( chalk.yellow( `Tick [${Date.now()}].` ));
+  await thing.publish();
+  console.log( chalk.blue( `..published` ));
 }
 
 // Main handler
@@ -57,10 +62,22 @@ async function main(){
   console.log( chalk.blue( 'Interval (milliseconds): ', interval ));  
   console.log( chalk.blue( 'Broker Address: ', broker ));
 
+  console.log( chalk.blue( 'Connecting as thing...' ));
+  thing = new Device( thingName, broker );
+  await thing.connect();
+  console.log( chalk.blue( '...thing connected.' ));
+  console.log( chalk.blue( 'Starting publish intervals.' ));
+
   setInterval( tick, interval );
 }
 
 // Entry point. Node does not (yet) support top-level await, so use promise
 main()
-  .then( () => console.log( chalk.green( '..Finished' )))
+  .then( () => {
+    if( thing ){
+      console.log( chalk.blue( '..disconnecting thing.' ));
+      console.log( chalk.blue( '..disconnected.' ));
+    }
+    console.log( chalk.green( '..Finished' ))
+  })
   .catch( err => console.error( chalk.red( 'Top level error:', err )));
