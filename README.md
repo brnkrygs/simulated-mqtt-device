@@ -3,11 +3,30 @@ A simulated AWS IoT device
 
 ## To run on an EC2 Instance
 
-Install a nodejs interpreter as part of your user scripts:
+1. Install a nodejs interpreter as part of your user scripts: `yum install nodejs`
+2. Install the `yarn` package manager: `yum install yarn`
+3. Install dependencies: `yarn install` from within the root of the package
+4. Register your device into AWS device manager, and copy your certificates into the `/certificates/` directory (see below for details)
+5. Start script `node .` or `node index.js`
 
-`yum install nodejs`
+You can register a new device with the AWS CLI. This is a quick way to get your device created, and the certs onto your EC2 instance in one command. Run this from the `/credentials/<thingname` directory on your EC2 instance. This assumes your EC2 role has IoT admin permissions in IAM.
 
-Built against node 15.4.0
+```bash
+aws iot create-thing --thing-name "<thingname>"
+
+aws iot create-keys-and-certificate --set-as-active \
+      --certificate-pem-outfile "<thingname>-certificate.pem.crt" \
+      --public-key-outfile "<thingname>-public.pem.key" \
+      --private-key-outfile "<thingname>-private.pem.key"
+
+aws iot attach-thing-principal \
+      --thing-name "<thingname>" \
+      --principal "<certificate ARN from previous step>"
+
+aws iot attach-policy \
+      --policy-name "<policy name>"
+      --target "<certificate ARN from previous step>"
+```
 
 ## Authorization
 
