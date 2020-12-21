@@ -13,9 +13,9 @@ class Device {
   }
 
   async connect(){
-    const caPath = 'credentials/AmazonRootCA1.pem.txt',
-    const certPath = `credentials/${this.thingName}/${this.thingName}-certificate.pem.crt`,
-    const keyPath = `credentials/${this.thingName}/${this.thingName}-private.pem.key`
+    const caPath = 'credentials/AmazonRootCA1.pem.txt';
+    const certPath = `credentials/${this.thingName}/${this.thingName}-certificate.pem.crt`;
+    const keyPath = `credentials/${this.thingName}/${this.thingName}-private.pem.key`;
 
     const options = {
       clientId: this.thingName,
