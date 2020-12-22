@@ -1,6 +1,7 @@
 {
   "topic": "simulator/__THINGNAME__/temps",
   "payload": {
-    "temp": 100
+    "temp": 100,
+    "color": "green"
   }
 }
