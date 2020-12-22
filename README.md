@@ -9,7 +9,7 @@ A simulated AWS IoT device
 4. Register your device into AWS device manager, and copy your certificates into the `/certificates/` directory (see below for details)
 5. Start script `node .` or `node index.js`
 
-You can register a new device with the AWS CLI. This is a quick way to get your device created, and the certs onto your EC2 instance in one command. Run this from the `/credentials/<thingname` directory on your EC2 instance. This assumes your EC2 role has IoT admin permissions in IAM.
+You can register a new device with the AWS CLI. This is a quick way to get your device created, and the certs onto your EC2 instance in one command. Run this from the `/credentials/<thingname>` directory on your EC2 instance. This assumes your EC2 role has IoT admin permissions in IAM.
 
 ```bash
 aws iot create-thing --thing-name "<thingname>"
@@ -24,7 +24,7 @@ aws iot attach-thing-principal \
       --principal "<certificate ARN from previous step>"
 
 aws iot attach-policy \
-      --policy-name "<policy name>"
+      --policy-name "<policy name>" \
       --target "<certificate ARN from previous step>"
 ```
 
