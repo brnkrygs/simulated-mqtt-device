@@ -5,9 +5,9 @@ const message1 = require( './messages/1.json' );
 
 class Device {
 
-  constructor( thingName, brokerDNS ){
+  constructor( thingName, broker ){
     this.thingName = thingName;
-    this.brokerDNS = brokerDNS;
+    this.broker = broker;
 
     this.client = null;
   }
@@ -24,7 +24,7 @@ class Device {
       key: fs.readFileSync( keyPath )
     };
 
-    this.client = await mqtt.connectAsync( broker, options );
+    this.client = await mqtt.connectAsync( this.broker, options );
   }
 
   async publish(){
