@@ -74,10 +74,6 @@ async function main(){
 // Entry point. Node does not (yet) support top-level await, so use promise
 main()
   .then( () => {
-    if( thing ){
-      console.log( chalk.blue( '..disconnecting thing.' ));
-      console.log( chalk.blue( '..disconnected.' ));
-    }
     console.log( chalk.green( '..Finished' ))
   })
   .catch( err => console.error( chalk.red( 'Top level error:', err )));
