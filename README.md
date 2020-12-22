@@ -9,7 +9,7 @@ A simulated AWS IoT device
 4. Register your device into AWS device manager, and copy your certificates into the `/certificates/` directory (see below for details)
 5. Start script `node .` or `node index.js`
 
-You can register a new device with the AWS CLI. This is a quick way to get your device created, and the certs onto your EC2 instance in one command. Run this from the `/credentials/<thingname>` directory on your EC2 instance. This assumes your EC2 role has IoT admin permissions in IAM.
+You can register a new device with the AWS CLI. This is a quick way to get your device created, and the certs onto your EC2 instance in one command. Run this from the `/credentials/<thingname>` directory on your EC2 instance. This assumes your EC2 role has IoT admin permissions in IAM. The policy created allows the device to connect to your AWS account in the specified region, using the thing name as the MQTT client id.
 
 ```bash
 aws iot create-thing --thing-name "<thingname>"
@@ -22,6 +22,10 @@ aws iot create-keys-and-certificate --set-as-active \
 aws iot attach-thing-principal \
       --thing-name "<thingname>" \
       --principal "<certificate ARN from previous step>"
+
+aws iot create-policy \
+      --policy-name "<policy name>" \
+      --policy-document "{ \"Version\": \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\", \"Action\": \"iot:Connect\", \"Resource\": \"arn:aws:iot:<YOUR REGION>:<YOUR AWS ACCOUNT>:client/${iot:Connection.Thing.ThingName}\" }, { \"Effect\": \"Allow\", \"Action\": \"iot:Publish\", \"Resource\": \"arn:aws:iot:<YOUR REGION>:<YOUR AWS ACCOUNT>:topic/<YOUR SIMULATOR TOPIC>\" } ] }"
 
 aws iot attach-policy \
       --policy-name "<policy name>" \
