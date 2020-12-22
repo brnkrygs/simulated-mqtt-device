@@ -40,7 +40,7 @@ class Device {
     let topic = message1.topic;
     topic = topic.replace( /__THINGNAME__/g, this.thingName );
 
-    await this.client.publish( message1.topic, message );
+    await this.client.publish( topic, message );
   }
 
   async disconnect(){
