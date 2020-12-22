@@ -3,13 +3,28 @@ A simulated AWS IoT device
 
 ## To run on an EC2 Instance
 
-1. Install a nodejs interpreter as part of your user scripts: `yum install nodejs`
-2. Install the `yarn` package manager: `yum install yarn`
-3. Install dependencies: `yarn install` from within the root of the package
-4. Register your device into AWS device manager, and copy your certificates into the `/certificates/` directory (see below for details)
-5. Start script `node .` or `node index.js`
+Prerequesits: a `nodejs` interpreter available in your environment
 
-You can register a new device with the AWS CLI. This is a quick way to get your device created, and the certs onto your EC2 instance in one command. Run this from the `/credentials/<thingname>` directory on your EC2 instance. This assumes your EC2 role has IoT admin permissions in IAM. The policy created allows the device to connect to your AWS account in the specified region, using the thing name as the MQTT client id.
+1. Install dependencies: `npm install` from the root of the package
+2. Register your device into AWS device manager, and copy your certificates into the `/certificates/` directory (see below for details)
+3. Start script `node .` or `node index.js`
+   1. Optionally, specify inputs as command line parameters e.g. `node index.js --thing-name thing1 --broker mqtts://<your broker DNS name>:<your broker port> --interval 500`
+
+### Specifying your Broker URL
+
+The [async-mqtt](https://github.com/mqttjs/async-mqtt) library in use requires the broker URL to be specified according to the [mqtt.js format](https://github.com/mqttjs/MQTT.js#connect).
+
+For AWS IoT Core, this ends up looking like:
+
+`mqtts://<your broker dns name>:8883`
+
+* Protocol: mqtts (TLS-encrypted MQTT)
+* DNS: found under `Settings` in your AWS IoT Core environment
+* 8883: this is the port AWS hosts MQTT over, standard for TLS encrypted MQTT connections
+
+### Creating a Device in AWS IoT Core
+
+You can register a new device with the AWS CLI. This is a quick way to get your device created, and the certs onto your EC2 instance in one command. Run this from the `/credentials/<thingname>` directory on your EC2 instance. This assumes your EC2 role / CLI instance has IoT admin permissions in IAM. The policy created allows the device to connect to your AWS account in the specified region, using the thing name as the MQTT client id.
 
 ```bash
 aws iot create-thing --thing-name "<thingname>"

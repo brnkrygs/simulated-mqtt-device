@@ -20,7 +20,7 @@ const questions = {
   broker: {
     type: 'input',
     name: 'broker',
-    message: 'What is the AWS IoT broker DNS name?',
+    message: 'What is the AWS IoT broker URL?',
     validate: (given) => given && given.length > 0
   }
 };
@@ -39,7 +39,7 @@ async function tick(){
 async function main(){
   program
     .version('1.0.0')
-    .option( '-b, --broker <broker>', 'DNS name for IoT broker' )
+    .option( '-b, --broker <broker>', 'URL for IoT broker' )
     .option( '-i, --interval <interval>', 'Interval for message publish' )
     .option( '-t, --thing-name <thingName>', 'Unique thingname for AWS IoT Device Registry' );
 
@@ -60,7 +60,7 @@ async function main(){
   console.log( chalk.green( 'Starting up..' ));
   console.log( chalk.blue( 'Thing name: ', thingName ));  
   console.log( chalk.blue( 'Interval (milliseconds): ', interval ));  
-  console.log( chalk.blue( 'Broker Address: ', broker ));
+  console.log( chalk.blue( 'Broker URL: ', broker ));
 
   console.log( chalk.blue( 'Connecting as thing...' ));
   thing = new Device( thingName, broker );
